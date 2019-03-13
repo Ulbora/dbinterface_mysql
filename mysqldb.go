@@ -36,6 +36,20 @@ func (m *MyDB) Connect() bool {
 	return rtn
 }
 
+//BeginTransaction BeginTransaction
+func (m *MyDB) BeginTransaction() *di.Transaction {
+	var trans di.Transaction
+	var myTrans MyDbTx
+	tx, err := m.db.Begin()
+	if err != nil {
+		log.Println("Transaction Error:", err.Error())
+	} else {
+		myTrans.Tx = tx
+	}
+
+	return &trans
+}
+
 //Test Test
 func (m *MyDB) Test(query string, args ...interface{}) *di.DbRow {
 	return m.Get(query, args...)

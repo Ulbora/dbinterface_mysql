@@ -27,6 +27,13 @@ func (m *MyDBMock) Connect() bool {
 	return m.MockSuccess
 }
 
+//BeginTransaction BeginTransaction
+func (m *MyDBMock) BeginTransaction() *di.Transaction {
+	var trans di.Transaction
+	//tx, err := m.db.Begin()
+	return &trans
+}
+
 //Test Test
 func (m *MyDBMock) Test(query string, args ...interface{}) *di.DbRow {
 	return m.MockRow
