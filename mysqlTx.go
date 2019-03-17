@@ -20,14 +20,12 @@ func (t *MyDbTx) Insert(query string, args ...interface{}) (bool, int64) {
 		log.Println("Insert transaction prepare err:", err.Error())
 	} else {
 		defer stmtIns.Close()
-		res, err := stmtIns.Exec(args)
+		res, err := stmtIns.Exec(args...)
 		if err != nil {
 			log.Println("Insert transaction Exec err:", err.Error())
-			//t.Tx.Rollback()
 		} else {
 			id, _ = res.LastInsertId()
 			success = true
-			//t.Tx.Commit()
 		}
 	}
 	return success, id
@@ -41,13 +39,11 @@ func (t *MyDbTx) Update(query string, args ...interface{}) bool {
 		log.Println("Update transaction prepare err:", err.Error())
 	} else {
 		defer stmtIns.Close()
-		_, err := stmtIns.Exec(args)
+		_, err := stmtIns.Exec(args...)
 		if err != nil {
 			log.Println("Update transaction Exec err:", err.Error())
-			//t.Tx.Rollback()
 		} else {
 			success = true
-			//t.Tx.Commit()
 		}
 	}
 	return success
@@ -61,7 +57,7 @@ func (t *MyDbTx) Delete(query string, args ...interface{}) bool {
 		log.Println("Delete transaction prepare err:", err.Error())
 	} else {
 		defer stmtIns.Close()
-		_, err := stmtIns.Exec(args)
+		_, err := stmtIns.Exec(args...)
 		if err != nil {
 			log.Println("Delete transaction Exec err:", err.Error())
 			//t.Tx.Rollback()

@@ -78,9 +78,21 @@ func TestMySQLDb_Test(t *testing.T) {
 }
 
 func TestMySQLDb_Insertfail(t *testing.T) {
-	var q = "insert into test2 (name, address) values(?, ?)"
+	var q = "insert into test22 (name, address) values(?, ?)"
 	var a []interface{}
 	a = append(a, "test insert 1", "123 main st")
+	suc, id := dbi.Insert(q, a...)
+	if suc {
+		t.Fail()
+	} else {
+		fmt.Println("inserted id: ", id)
+	}
+}
+
+func TestMySQLDb_Insertfail2(t *testing.T) {
+	var q = "insert into test (name, address) values(?, ?)"
+	var a []interface{}
+	//a = append(a, "test insert 1", "123 main st")
 	suc, id := dbi.Insert(q, a...)
 	if suc {
 		t.Fail()
@@ -106,6 +118,16 @@ func TestMySQLDb_Updatefail(t *testing.T) {
 	var q = "update test1 set name = ? , address = ? where id = ? "
 	var a []interface{}
 	a = append(a, "test insert 2", "123456 main st", iid1)
+	suc := dbi.Update(q, a...)
+	if suc {
+		t.Fail()
+	}
+}
+
+func TestMySQLDb_Updatefail2(t *testing.T) {
+	var q = "update test set name = ? , address = ? where id = ? "
+	var a []interface{}
+	//a = append(a, "test insert 2", "123456 main st", iid1)
 	suc := dbi.Update(q, a...)
 	if suc {
 		t.Fail()
@@ -157,6 +179,22 @@ func TestMySQLDb_Get(t *testing.T) {
 	}
 }
 
+func TestMySQLDb_Getfail(t *testing.T) {
+	//var rtn bool
+	var q = "select * from test22 where id = ? "
+	var a []interface{}
+	a = append(a, iid1)
+	rowPtr := dbi.Get(q, a...)
+	if rowPtr != nil {
+		foundRow := rowPtr.Row
+		fmt.Print("Get in fail ")
+		fmt.Println(foundRow)
+		if len(foundRow) > 0 {
+			t.Fail()
+		}
+	}
+}
+
 func TestMySQLDb_GetList(t *testing.T) {
 	var suc bool
 	var q = "select * from test where address = ? "
@@ -180,6 +218,22 @@ func TestMySQLDb_GetList(t *testing.T) {
 	}
 }
 
+func TestMySQLDb_GetListfail(t *testing.T) {
+
+	var q = "select * from test222 where address = ? "
+	var a []interface{}
+	a = append(a, "123456 main st")
+	rowsPtr := dbi.GetList(q, a...)
+	if rowsPtr != nil {
+		foundRow := rowsPtr.Rows
+		fmt.Print("Get in fail ")
+		fmt.Println(foundRow)
+		if len(foundRow) > 0 {
+			t.Fail()
+		}
+	}
+}
+
 func TestMySQLDb_Deletefail(t *testing.T) {
 	var q = "delete from test1 where id = ? "
 	var a []interface{}
@@ -198,6 +252,15 @@ func TestMySQLDb_Delete(t *testing.T) {
 	if !suc {
 		t.Fail()
 	}
+}
+
+func TestMySQLDb_BeginTransaction(t *testing.T) {
+	trx := dbi.BeginTransaction()
+	fmt.Println("tx", trx)
+	if trx == nil {
+		t.Fail()
+	}
+
 }
 
 func TestMySQLDb_Close(t *testing.T) {

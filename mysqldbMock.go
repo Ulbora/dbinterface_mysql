@@ -28,10 +28,12 @@ func (m *MyDBMock) Connect() bool {
 }
 
 //BeginTransaction BeginTransaction
-func (m *MyDBMock) BeginTransaction() *di.Transaction {
+func (m *MyDBMock) BeginTransaction() di.Transaction {
 	var trans di.Transaction
-	//tx, err := m.db.Begin()
-	return &trans
+	var mtx MyDbTxMock
+	mtx.MyDBMock = m
+	trans = &mtx
+	return trans
 }
 
 //Test Test

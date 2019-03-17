@@ -37,7 +37,7 @@ func (m *MyDB) Connect() bool {
 }
 
 //BeginTransaction BeginTransaction
-func (m *MyDB) BeginTransaction() *di.Transaction {
+func (m *MyDB) BeginTransaction() di.Transaction {
 	var trans di.Transaction
 	var myTrans MyDbTx
 	tx, err := m.db.Begin()
@@ -46,8 +46,8 @@ func (m *MyDB) BeginTransaction() *di.Transaction {
 	} else {
 		myTrans.Tx = tx
 	}
-
-	return &trans
+	trans = &myTrans
+	return trans
 }
 
 //Test Test

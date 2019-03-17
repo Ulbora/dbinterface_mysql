@@ -2,3 +2,5 @@
 
 Database Interface MySQL module
 ==============
+
+This is a mockable database interface for MySQL build on the DbInterface project.
