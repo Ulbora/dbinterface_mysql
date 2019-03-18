@@ -10,16 +10,18 @@ import (
 
 //MyDBMock MyDBMock
 type MyDBMock struct {
-	Host                   string
-	User                   string
-	Password               string
-	Database               string
-	db                     *sql.DB
-	err                    error
-	MockConnectSuccess     bool
-	MockCloseSuccess       bool
-	MockCommitSuccess      bool
-	MockRollbackSuccess    bool
+	Host     string
+	User     string
+	Password string
+	Database string
+	db       *sql.DB
+	err      error
+
+	MockConnectSuccess  bool
+	MockCloseSuccess    bool
+	MockCommitSuccess   bool
+	MockRollbackSuccess bool
+
 	MockInsertSuccess1     bool
 	MockInsertSuccess2     bool
 	MockInsertSuccess3     bool
@@ -32,6 +34,7 @@ type MyDBMock struct {
 	MockInsertID2          int64
 	MockInsertID3          int64
 	MockInsertID4          int64
+
 	MockUpdateSuccess1     bool
 	MockUpdateSuccess2     bool
 	MockUpdateSuccess3     bool
@@ -40,6 +43,7 @@ type MyDBMock struct {
 	mockUpdateSuccess2Used bool
 	mockUpdateSuccess3Used bool
 	mockUpdateSuccess4Used bool
+
 	MockDeleteSuccess1     bool
 	MockDeleteSuccess2     bool
 	MockDeleteSuccess3     bool
@@ -48,9 +52,26 @@ type MyDBMock struct {
 	mockDeleteSuccess2Used bool
 	mockDeleteSuccess3Used bool
 	mockDeleteSuccess4Used bool
-	MockTestRow            *di.DbRow
-	MockRow                *di.DbRow
-	MockRows               *di.DbRows
+
+	MockTestRow *di.DbRow
+
+	mockRow1Used bool
+	mockRow2Used bool
+	mockRow3Used bool
+	mockRow4Used bool
+	MockRow1     *di.DbRow
+	MockRow2     *di.DbRow
+	MockRow3     *di.DbRow
+	MockRow4     *di.DbRow
+
+	mockRows1Used bool
+	mockRows2Used bool
+	mockRows3Used bool
+	mockRows4Used bool
+	MockRows1     *di.DbRows
+	MockRows2     *di.DbRows
+	MockRows3     *di.DbRows
+	MockRows4     *di.DbRows
 }
 
 //Connect Connect
@@ -117,12 +138,41 @@ func (m *MyDBMock) Update(query string, args ...interface{}) bool {
 
 //Get Get
 func (m *MyDBMock) Get(query string, args ...interface{}) *di.DbRow {
-	return m.MockRow
+	//return m.MockRow
+	var rtn *di.DbRow
+	if !m.mockRow1Used {
+		m.mockRow1Used = true
+		rtn = m.MockRow1
+	} else if !m.mockRow2Used {
+		m.mockRow2Used = true
+		rtn = m.MockRow2
+	} else if !m.mockRow3Used {
+		m.mockRow3Used = true
+		rtn = m.MockRow3
+	} else if !m.mockRow4Used {
+		m.mockRow4Used = true
+		rtn = m.MockRow4
+	}
+	return rtn
 }
 
 //GetList GetList
 func (m *MyDBMock) GetList(query string, args ...interface{}) *di.DbRows {
-	return m.MockRows
+	var rtn *di.DbRows
+	if !m.mockRows1Used {
+		m.mockRows1Used = true
+		rtn = m.MockRows1
+	} else if !m.mockRows2Used {
+		m.mockRows2Used = true
+		rtn = m.MockRows2
+	} else if !m.mockRows3Used {
+		m.mockRows3Used = true
+		rtn = m.MockRows3
+	} else if !m.mockRows4Used {
+		m.mockRows4Used = true
+		rtn = m.MockRows4
+	}
+	return rtn
 }
 
 //Delete Delete
