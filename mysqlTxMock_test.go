@@ -50,7 +50,7 @@ func TestMyDbTxMock_Insert(t *testing.T) {
 
 func TestMyDbTxMock_Insertfail(t *testing.T) {
 	tx1m = dbitm.BeginTransaction()
-	mdbtm.MockInsertSuccess1 = false
+	mdbtm.MockInsertSuccess2 = false
 	var q = "insert into test (name, address) values(?, ?)"
 	var a []interface{}
 	//a = append(a, "test insert 1", "123 main st")
@@ -79,7 +79,7 @@ func TestMyDbTxMock_Update(t *testing.T) {
 
 func TestMyDbTxMock_Updatefail(t *testing.T) {
 	tx1xx := dbitm.BeginTransaction()
-	mdbtm.MockUpdateSuccess1 = false
+	mdbtm.MockUpdateSuccess2 = false
 	var q = "update test11 set name = ? , address = ? where id = ? "
 	var a []interface{}
 	a = append(a, "test insert 2", "123456 main st", idtx1)
@@ -115,12 +115,22 @@ func TestMyDbTxMock_Rollback(t *testing.T) {
 
 func TestMyDbTxMock_Deletefail(t *testing.T) {
 	tx1xx := dbitm.BeginTransaction()
-	mdbtm.MockDeleteSuccess1 = false
+	mdbtm.MockDeleteSuccess2 = false
 	var q = "delete from test22 where id = ? "
 	var a []interface{}
 	a = append(a, idtx1)
 	suc := tx1xx.Delete(q, a...)
 	if suc {
+		t.Fail()
+	}
+	tx1xx.Commit()
+}
+
+func TestMyDbTxMock_Commit(t *testing.T) {
+	tx1xx := dbitm.BeginTransaction()
+	mdbtm.MockCommitSuccess = true
+	suc := tx1xx.Commit()
+	if !suc {
 		t.Fail()
 	}
 	tx1xx.Commit()
