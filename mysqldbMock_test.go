@@ -18,7 +18,7 @@ func TestMyDBMock_Connect(t *testing.T) {
 	mdb.User = "admin"
 	mdb.Password = "admin1"
 	mdb.Database = "testdb1"
-	mdb.MockSuccess = true
+	mdb.MockConnectSuccess = true
 	dbim = &mdb
 	suc := dbim.Connect()
 	if !suc {
@@ -31,11 +31,12 @@ func TestMyDBMock_Test(t *testing.T) {
 	var rtn bool
 	var rtnRow di.DbRow
 	rtnRow.Row = []string{"1", "test2"}
-	mdb.MockRow = &rtnRow
+	mdb.MockTestRow = &rtnRow
 	dbim = &mdb
 	var q = "select count(*) from test "
 	var a []interface{}
 	rowPtr := dbim.Test(q, a...)
+	fmt.Println("Mock Records found: ", rowPtr)
 	if rowPtr != nil {
 		foundRow := rowPtr.Row
 		int64Val, err2 := strconv.ParseInt(foundRow[0], 10, 0)
@@ -55,8 +56,8 @@ func TestMyDBMock_Test(t *testing.T) {
 
 func TestMyDBMock_Insert(t *testing.T) {
 	var mdb MyDBMock
-	mdb.MockSuccess = true
-	mdb.MockID = 1
+	mdb.MockInsertSuccess1 = true
+	mdb.MockInsertID1 = 1
 	dbim = &mdb
 	var q = "insert into test (name, address) values(?, ?)"
 	var a []interface{}
@@ -72,7 +73,7 @@ func TestMyDBMock_Insert(t *testing.T) {
 
 func TestMyDBMock_Update(t *testing.T) {
 	var mdb MyDBMock
-	mdb.MockSuccess = true
+	mdb.MockUpdateSuccess1 = true
 	dbim = &mdb
 	var q = "update test set name = ? , address = ? where id = ? "
 	var a []interface{}
@@ -160,7 +161,7 @@ func TestMyDBMock_GetList(t *testing.T) {
 
 func TestMyDBMock_Delete(t *testing.T) {
 	var mdb MyDBMock
-	mdb.MockSuccess = true
+	mdb.MockDeleteSuccess1 = true
 	dbim = &mdb
 	var inint int64 = 2
 	var q = "delete from test1 where id = ? "
@@ -174,7 +175,7 @@ func TestMyDBMock_Delete(t *testing.T) {
 
 func TestMyDBMock_Close(t *testing.T) {
 	var mdb MyDBMock
-	mdb.MockSuccess = true
+	mdb.MockCloseSuccess = true
 	dbim = &mdb
 	suc := dbim.Close()
 	if !suc {
