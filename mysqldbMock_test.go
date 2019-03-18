@@ -71,6 +71,75 @@ func TestMyDBMock_Insert(t *testing.T) {
 	}
 }
 
+func TestMyDBMock_Insert2(t *testing.T) {
+	var mdb MyDBMock
+	mdb.MockInsertSuccess1 = true
+	mdb.MockInsertID1 = 1
+	mdb.MockInsertSuccess2 = true
+	mdb.MockInsertID2 = 1
+	dbim = &mdb
+	var q = "insert into test (name, address) values(?, ?)"
+	var a []interface{}
+	a = append(a, "test insert 1", "123 main st")
+	dbim.Insert(q, a...)
+	suc, id := dbim.Insert(q, a...)
+	if !suc || id < 1 {
+		t.Fail()
+	} else {
+		iid1 = id
+		fmt.Println("mock inserted id: ", id)
+	}
+}
+
+func TestMyDBMock_Insert3(t *testing.T) {
+	var mdb MyDBMock
+	mdb.MockInsertSuccess1 = true
+	mdb.MockInsertID1 = 1
+	mdb.MockInsertSuccess2 = true
+	mdb.MockInsertID2 = 1
+	mdb.MockInsertSuccess3 = true
+	mdb.MockInsertID3 = 1
+	dbim = &mdb
+	var q = "insert into test (name, address) values(?, ?)"
+	var a []interface{}
+	a = append(a, "test insert 1", "123 main st")
+	dbim.Insert(q, a...)
+	dbim.Insert(q, a...)
+	suc, id := dbim.Insert(q, a...)
+	if !suc || id < 1 {
+		t.Fail()
+	} else {
+		iid1 = id
+		fmt.Println("mock inserted id: ", id)
+	}
+}
+
+func TestMyDBMock_Insert4(t *testing.T) {
+	var mdb MyDBMock
+	mdb.MockInsertSuccess1 = true
+	mdb.MockInsertID1 = 1
+	mdb.MockInsertSuccess2 = true
+	mdb.MockInsertID2 = 1
+	mdb.MockInsertSuccess3 = true
+	mdb.MockInsertID3 = 1
+	mdb.MockInsertSuccess4 = true
+	mdb.MockInsertID4 = 1
+	dbim = &mdb
+	var q = "insert into test (name, address) values(?, ?)"
+	var a []interface{}
+	a = append(a, "test insert 1", "123 main st")
+	dbim.Insert(q, a...)
+	dbim.Insert(q, a...)
+	dbim.Insert(q, a...)
+	suc, id := dbim.Insert(q, a...)
+	if !suc || id < 1 {
+		t.Fail()
+	} else {
+		iid1 = id
+		fmt.Println("mock inserted id: ", id)
+	}
+}
+
 func TestMyDBMock_Update(t *testing.T) {
 	var mdb MyDBMock
 	mdb.MockUpdateSuccess1 = true
@@ -78,6 +147,57 @@ func TestMyDBMock_Update(t *testing.T) {
 	var q = "update test set name = ? , address = ? where id = ? "
 	var a []interface{}
 	a = append(a, "test insert 2", "123456 main st", iid1)
+	suc := dbim.Update(q, a...)
+	if !suc {
+		t.Fail()
+	}
+}
+
+func TestMyDBMock_Update2(t *testing.T) {
+	var mdb MyDBMock
+	mdb.MockUpdateSuccess1 = true
+	mdb.MockUpdateSuccess2 = true
+	dbim = &mdb
+	var q = "update test set name = ? , address = ? where id = ? "
+	var a []interface{}
+	a = append(a, "test insert 2", "123456 main st", iid1)
+	dbim.Update(q, a...)
+	suc := dbim.Update(q, a...)
+	if !suc {
+		t.Fail()
+	}
+}
+
+func TestMyDBMock_Update3(t *testing.T) {
+	var mdb MyDBMock
+	mdb.MockUpdateSuccess1 = true
+	mdb.MockUpdateSuccess2 = true
+	mdb.MockUpdateSuccess3 = true
+	dbim = &mdb
+	var q = "update test set name = ? , address = ? where id = ? "
+	var a []interface{}
+	a = append(a, "test insert 2", "123456 main st", iid1)
+	dbim.Update(q, a...)
+	dbim.Update(q, a...)
+	suc := dbim.Update(q, a...)
+	if !suc {
+		t.Fail()
+	}
+}
+
+func TestMyDBMock_Update4(t *testing.T) {
+	var mdb MyDBMock
+	mdb.MockUpdateSuccess1 = true
+	mdb.MockUpdateSuccess2 = true
+	mdb.MockUpdateSuccess3 = true
+	mdb.MockUpdateSuccess4 = true
+	dbim = &mdb
+	var q = "update test set name = ? , address = ? where id = ? "
+	var a []interface{}
+	a = append(a, "test insert 2", "123456 main st", iid1)
+	dbim.Update(q, a...)
+	dbim.Update(q, a...)
+	dbim.Update(q, a...)
 	suc := dbim.Update(q, a...)
 	if !suc {
 		t.Fail()
@@ -199,6 +319,100 @@ func TestMyDBMock_Get2(t *testing.T) {
 	}
 }
 
+func TestMyDBMock_Get3(t *testing.T) {
+	var mdb MyDBMock
+	var rtnRow di.DbRow
+	rtnRow.Row = []string{"2", "test2"}
+	mdb.MockRow1 = &rtnRow
+	mdb.MockRow2 = &rtnRow
+	mdb.MockRow3 = &rtnRow
+	dbim = &mdb
+	var rtn bool
+	var inint int64 = 2
+	var q = "select * from test where id = ? "
+	var a []interface{}
+	a = append(a, inint)
+	dbim.Get(q, a...)
+	dbim.Get(q, a...)
+	rowPtr := dbim.Get(q, a...)
+	if rowPtr != nil {
+		foundRow := rowPtr.Row
+		fmt.Print("Get ")
+		fmt.Println(foundRow)
+		//fmt.Println("Get results: --------------------------")
+		int64Val, err2 := strconv.ParseInt(foundRow[0], 10, 0)
+		if err2 != nil {
+			fmt.Print(err2)
+		}
+		if inint != int64Val {
+			fmt.Print(" Mock Get ")
+			fmt.Print(inint)
+			fmt.Print(" != ")
+			fmt.Println(int64Val)
+			t.Fail()
+		} else {
+			fmt.Print("Mock found id")
+			fmt.Print(" = ")
+			fmt.Println(int64Val)
+			rtn = true
+		}
+	} else {
+		fmt.Println("database read failed")
+		t.Fail()
+	}
+	if !rtn {
+		t.Fail()
+	}
+}
+
+func TestMyDBMock_Get4(t *testing.T) {
+	var mdb MyDBMock
+	var rtnRow di.DbRow
+	rtnRow.Row = []string{"2", "test2"}
+	mdb.MockRow1 = &rtnRow
+	mdb.MockRow2 = &rtnRow
+	mdb.MockRow3 = &rtnRow
+	mdb.MockRow4 = &rtnRow
+	dbim = &mdb
+	var rtn bool
+	var inint int64 = 2
+	var q = "select * from test where id = ? "
+	var a []interface{}
+	a = append(a, inint)
+	dbim.Get(q, a...)
+	dbim.Get(q, a...)
+	dbim.Get(q, a...)
+	rowPtr := dbim.Get(q, a...)
+	if rowPtr != nil {
+		foundRow := rowPtr.Row
+		fmt.Print("Get ")
+		fmt.Println(foundRow)
+		//fmt.Println("Get results: --------------------------")
+		int64Val, err2 := strconv.ParseInt(foundRow[0], 10, 0)
+		if err2 != nil {
+			fmt.Print(err2)
+		}
+		if inint != int64Val {
+			fmt.Print(" Mock Get ")
+			fmt.Print(inint)
+			fmt.Print(" != ")
+			fmt.Println(int64Val)
+			t.Fail()
+		} else {
+			fmt.Print("Mock found id")
+			fmt.Print(" = ")
+			fmt.Println(int64Val)
+			rtn = true
+		}
+	} else {
+		fmt.Println("database read failed")
+		t.Fail()
+	}
+	if !rtn {
+		t.Fail()
+	}
+}
+
 func TestMyDBMock_GetList(t *testing.T) {
 	var mdb MyDBMock
 	var rtnRows di.DbRows
@@ -232,6 +446,117 @@ func TestMyDBMock_GetList(t *testing.T) {
 	}
 }
 
+func TestMyDBMock_GetList2(t *testing.T) {
+	var mdb MyDBMock
+	var rtnRows di.DbRows
+	var r1 = []string{"1", "test1"}
+	var r2 = []string{"2", "test2"}
+	var val [][]string
+	val = append(val, r1)
+	val = append(val, r2)
+	rtnRows.Rows = val
+	mdb.MockRows1 = &rtnRows
+	mdb.MockRows2 = &rtnRows
+	dbim = &mdb
+	var suc bool
+	var q = "select * from test where address = ? "
+	var a []interface{}
+	a = append(a, "123456 main st")
+	dbim.GetList(q, a...)
+	rowsPtr := dbim.GetList(q, a...)
+	if rowsPtr != nil {
+		foundRows := rowsPtr.Rows
+		fmt.Println("Mock rows found: ", foundRows)
+		//fmt.Println("GetList results: --------------------------")
+		fmt.Println("Mock rows found count: ", len(foundRows))
+		if len(foundRows) > 0 {
+			suc = true
+		}
+	} else {
+		fmt.Println("database read failed")
+		t.Fail()
+	}
+	if !suc {
+		t.Fail()
+	}
+}
+
+func TestMyDBMock_GetList3(t *testing.T) {
+	var mdb MyDBMock
+	var rtnRows di.DbRows
+	var r1 = []string{"1", "test1"}
+	var r2 = []string{"2", "test2"}
+	var val [][]string
+	val = append(val, r1)
+	val = append(val, r2)
+	rtnRows.Rows = val
+	mdb.MockRows1 = &rtnRows
+	mdb.MockRows2 = &rtnRows
+	mdb.MockRows3 = &rtnRows
+	dbim = &mdb
+	var suc bool
+	var q = "select * from test where address = ? "
+	var a []interface{}
+	a = append(a, "123456 main st")
+	dbim.GetList(q, a...)
+	dbim.GetList(q, a...)
+	rowsPtr := dbim.GetList(q, a...)
+	if rowsPtr != nil {
+		foundRows := rowsPtr.Rows
+		fmt.Println("Mock rows found: ", foundRows)
+		//fmt.Println("GetList results: --------------------------")
+		fmt.Println("Mock rows found count: ", len(foundRows))
+		if len(foundRows) > 0 {
+			suc = true
+		}
+	} else {
+		fmt.Println("database read failed")
+		t.Fail()
+	}
+	if !suc {
+		t.Fail()
+	}
+}
+
+func TestMyDBMock_GetList4(t *testing.T) {
+	var mdb MyDBMock
+	var rtnRows di.DbRows
+	var r1 = []string{"1", "test1"}
+	var r2 = []string{"2", "test2"}
+	var val [][]string
+	val = append(val, r1)
+	val = append(val, r2)
+	rtnRows.Rows = val
+	mdb.MockRows1 = &rtnRows
+	mdb.MockRows2 = &rtnRows
+	mdb.MockRows3 = &rtnRows
+	mdb.MockRows4 = &rtnRows
+	dbim = &mdb
+	var suc bool
+	var q = "select * from test where address = ? "
+	var a []interface{}
+	a = append(a, "123456 main st")
+	dbim.GetList(q, a...)
+	dbim.GetList(q, a...)
+	dbim.GetList(q, a...)
+	rowsPtr := dbim.GetList(q, a...)
+	if rowsPtr != nil {
+		foundRows := rowsPtr.Rows
+		fmt.Println("Mock rows found: ", foundRows)
+		//fmt.Println("GetList results: --------------------------")
+		fmt.Println("Mock rows found count: ", len(foundRows))
+		if len(foundRows) > 0 {
+			suc = true
+		}
+	} else {
+		fmt.Println("database read failed")
+		t.Fail()
+	}
+	if !suc {
+		t.Fail()
+	}
+}
+
 func TestMyDBMock_Delete(t *testing.T) {
 	var mdb MyDBMock
 	mdb.MockDeleteSuccess1 = true
@@ -246,6 +571,59 @@ func TestMyDBMock_Delete(t *testing.T) {
 	}
 }
 
+func TestMyDBMock_Delete2(t *testing.T) {
+	var mdb MyDBMock
+	mdb.MockDeleteSuccess1 = true
+	mdb.MockDeleteSuccess2 = true
+	dbim = &mdb
+	var inint int64 = 2
+	var q = "delete from test1 where id = ? "
+	var a []interface{}
+	a = append(a, inint)
+	dbim.Delete(q, a...)
+	suc := dbim.Delete(q, a...)
+	if !suc {
+		t.Fail()
+	}
+}
+
+func TestMyDBMock_Delete3(t *testing.T) {
+	var mdb MyDBMock
+	mdb.MockDeleteSuccess1 = true
+	mdb.MockDeleteSuccess2 = true
+	mdb.MockDeleteSuccess3 = true
+	dbim = &mdb
+	var inint int64 = 2
+	var q = "delete from test1 where id = ? "
+	var a []interface{}
+	a = append(a, inint)
+	dbim.Delete(q, a...)
+	dbim.Delete(q, a...)
+	suc := dbim.Delete(q, a...)
+	if !suc {
+		t.Fail()
+	}
+}
+
+func TestMyDBMock_Delete4(t *testing.T) {
+	var mdb MyDBMock
+	mdb.MockDeleteSuccess1 = true
+	mdb.MockDeleteSuccess2 = true
+	mdb.MockDeleteSuccess3 = true
+	mdb.MockDeleteSuccess4 = true
+	dbim = &mdb
+	var inint int64 = 2
+	var q = "delete from test1 where id = ? "
+	var a []interface{}
+	a = append(a, inint)
+	dbim.Delete(q, a...)
+	dbim.Delete(q, a...)
+	dbim.Delete(q, a...)
+	suc := dbim.Delete(q, a...)
+	if !suc {
+		t.Fail()
+	}
+}
 func TestMyDBMock_Close(t *testing.T) {
 	var mdb MyDBMock
 	mdb.MockCloseSuccess = true
