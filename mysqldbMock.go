@@ -2,7 +2,9 @@ package mysql
 
 import (
 	"database/sql"
+
 	di "github.com/Ulbora/dbinterface"
+
 	//"log"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -26,14 +28,26 @@ type MyDBMock struct {
 	MockInsertSuccess2     bool
 	MockInsertSuccess3     bool
 	MockInsertSuccess4     bool
+	MockInsertSuccess5     bool
+	MockInsertSuccess6     bool
+	MockInsertSuccess7     bool
+	MockInsertSuccess8     bool
 	mockInsertSuccess1Used bool
 	mockInsertSuccess2Used bool
 	mockInsertSuccess3Used bool
 	mockInsertSuccess4Used bool
+	mockInsertSuccess5Used bool
+	mockInsertSuccess6Used bool
+	mockInsertSuccess7Used bool
+	mockInsertSuccess8Used bool
 	MockInsertID1          int64
 	MockInsertID2          int64
 	MockInsertID3          int64
 	MockInsertID4          int64
+	MockInsertID5          int64
+	MockInsertID6          int64
+	MockInsertID7          int64
+	MockInsertID8          int64
 
 	MockUpdateSuccess1     bool
 	MockUpdateSuccess2     bool
@@ -48,10 +62,18 @@ type MyDBMock struct {
 	MockDeleteSuccess2     bool
 	MockDeleteSuccess3     bool
 	MockDeleteSuccess4     bool
+	MockDeleteSuccess5     bool
+	MockDeleteSuccess6     bool
+	MockDeleteSuccess7     bool
+	MockDeleteSuccess8     bool
 	mockDeleteSuccess1Used bool
 	mockDeleteSuccess2Used bool
 	mockDeleteSuccess3Used bool
 	mockDeleteSuccess4Used bool
+	mockDeleteSuccess5Used bool
+	mockDeleteSuccess6Used bool
+	mockDeleteSuccess7Used bool
+	mockDeleteSuccess8Used bool
 
 	MockTestRow *di.DbRow
 

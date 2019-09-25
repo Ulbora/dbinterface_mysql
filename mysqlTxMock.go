@@ -30,6 +30,22 @@ func (t *MyDbTxMock) Insert(query string, args ...interface{}) (bool, int64) {
 		t.MyDBMock.mockInsertSuccess4Used = true
 		rtn = t.MyDBMock.MockInsertSuccess4
 		id = t.MyDBMock.MockInsertID4
+	} else if !t.MyDBMock.mockInsertSuccess5Used {
+		t.MyDBMock.mockInsertSuccess5Used = true
+		rtn = t.MyDBMock.MockInsertSuccess5
+		id = t.MyDBMock.MockInsertID5
+	} else if !t.MyDBMock.mockInsertSuccess6Used {
+		t.MyDBMock.mockInsertSuccess6Used = true
+		rtn = t.MyDBMock.MockInsertSuccess6
+		id = t.MyDBMock.MockInsertID6
+	} else if !t.MyDBMock.mockInsertSuccess7Used {
+		t.MyDBMock.mockInsertSuccess7Used = true
+		rtn = t.MyDBMock.MockInsertSuccess7
+		id = t.MyDBMock.MockInsertID7
+	} else if !t.MyDBMock.mockInsertSuccess8Used {
+		t.MyDBMock.mockInsertSuccess8Used = true
+		rtn = t.MyDBMock.MockInsertSuccess8
+		id = t.MyDBMock.MockInsertID8
 	}
 	return rtn, id
 }
@@ -68,6 +84,18 @@ func (t *MyDbTxMock) Delete(query string, args ...interface{}) bool {
 	} else if !t.MyDBMock.mockDeleteSuccess4Used {
 		t.MyDBMock.mockDeleteSuccess4Used = true
 		rtn = t.MyDBMock.MockDeleteSuccess4
+	} else if !t.MyDBMock.mockDeleteSuccess5Used {
+		t.MyDBMock.mockDeleteSuccess5Used = true
+		rtn = t.MyDBMock.MockDeleteSuccess5
+	} else if !t.MyDBMock.mockDeleteSuccess6Used {
+		t.MyDBMock.mockDeleteSuccess6Used = true
+		rtn = t.MyDBMock.MockDeleteSuccess6
+	} else if !t.MyDBMock.mockDeleteSuccess7Used {
+		t.MyDBMock.mockDeleteSuccess7Used = true
+		rtn = t.MyDBMock.MockDeleteSuccess7
+	} else if !t.MyDBMock.mockDeleteSuccess8Used {
+		t.MyDBMock.mockDeleteSuccess8Used = true
+		rtn = t.MyDBMock.MockDeleteSuccess8
 	}
 	return rtn
 }
