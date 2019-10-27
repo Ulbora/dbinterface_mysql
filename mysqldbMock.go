@@ -81,19 +81,35 @@ type MyDBMock struct {
 	mockRow2Used bool
 	mockRow3Used bool
 	mockRow4Used bool
+	mockRow5Used bool
+	mockRow6Used bool
+	mockRow7Used bool
+	mockRow8Used bool
 	MockRow1     *di.DbRow
 	MockRow2     *di.DbRow
 	MockRow3     *di.DbRow
 	MockRow4     *di.DbRow
+	MockRow5     *di.DbRow
+	MockRow6     *di.DbRow
+	MockRow7     *di.DbRow
+	MockRow8     *di.DbRow
 
 	mockRows1Used bool
 	mockRows2Used bool
 	mockRows3Used bool
 	mockRows4Used bool
+	mockRows5Used bool
+	mockRows6Used bool
+	mockRows7Used bool
+	mockRows8Used bool
 	MockRows1     *di.DbRows
 	MockRows2     *di.DbRows
 	MockRows3     *di.DbRows
 	MockRows4     *di.DbRows
+	MockRows5     *di.DbRows
+	MockRows6     *di.DbRows
+	MockRows7     *di.DbRows
+	MockRows8     *di.DbRows
 }
 
 //Connect Connect
@@ -174,6 +190,18 @@ func (m *MyDBMock) Get(query string, args ...interface{}) *di.DbRow {
 	} else if !m.mockRow4Used {
 		m.mockRow4Used = true
 		rtn = m.MockRow4
+	} else if !m.mockRow5Used {
+		m.mockRow5Used = true
+		rtn = m.MockRow5
+	} else if !m.mockRow6Used {
+		m.mockRow6Used = true
+		rtn = m.MockRow6
+	} else if !m.mockRow7Used {
+		m.mockRow7Used = true
+		rtn = m.MockRow7
+	} else if !m.mockRow8Used {
+		m.mockRow8Used = true
+		rtn = m.MockRow8
 	}
 	return rtn
 }
@@ -193,6 +221,18 @@ func (m *MyDBMock) GetList(query string, args ...interface{}) *di.DbRows {
 	} else if !m.mockRows4Used {
 		m.mockRows4Used = true
 		rtn = m.MockRows4
+	} else if !m.mockRows5Used {
+		m.mockRows5Used = true
+		rtn = m.MockRows5
+	} else if !m.mockRows6Used {
+		m.mockRows6Used = true
+		rtn = m.MockRows6
+	} else if !m.mockRows7Used {
+		m.mockRows7Used = true
+		rtn = m.MockRows7
+	} else if !m.mockRows8Used {
+		m.mockRows8Used = true
+		rtn = m.MockRows8
 	}
 	return rtn
 }
