@@ -117,6 +117,13 @@ func (m *MyDBMock) Connect() bool {
 	return m.MockConnectSuccess
 }
 
+//GetNewDatabase GetNewDatabase
+func (m *MyDBMock) GetNewDatabase() di.Database {
+	var db di.Database
+	db = m
+	return db
+}
+
 //BeginTransaction BeginTransaction
 func (m *MyDBMock) BeginTransaction() di.Transaction {
 	var trans di.Transaction

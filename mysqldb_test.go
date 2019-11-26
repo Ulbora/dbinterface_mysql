@@ -21,7 +21,8 @@ func TestMySQLDb_Connectfail(t *testing.T) {
 	mdb.User = "admin"
 	mdb.Password = "admin1"
 	mdb.Database = "testdb1"
-	dbi = &mdb
+	// dbi = &mdb
+	dbi = mdb.GetNewDatabase()
 	suc := dbi.Connect()
 	if suc {
 		t.Fail()
@@ -35,7 +36,8 @@ func TestMySQLDb_Connect(t *testing.T) {
 	mdb.User = "admin"
 	mdb.Password = "admin"
 	mdb.Database = "testdb"
-	dbi = &mdb
+	// dbi = &mdb
+	dbi = mdb.GetNewDatabase()
 	suc := dbi.Connect()
 	if !suc {
 		t.Fail()
@@ -48,7 +50,8 @@ func TestMySQLDb_Connect2(t *testing.T) {
 	mdb.User = "admin"
 	mdb.Password = "admin"
 	mdb.Database = "ffl_list_10012018"
-	dbi2 = &mdb
+	// dbi2 = &mdb
+	dbi2 = mdb.GetNewDatabase()
 	suc := dbi2.Connect()
 	if !suc {
 		t.Fail()

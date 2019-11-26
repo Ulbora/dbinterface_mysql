@@ -36,6 +36,13 @@ func (m *MyDB) Connect() bool {
 	return rtn
 }
 
+//GetNewDatabase GetNewDatabase
+func (m *MyDB) GetNewDatabase() di.Database {
+	var db di.Database
+	db = m
+	return db
+}
+
 //BeginTransaction BeginTransaction
 func (m *MyDB) BeginTransaction() di.Transaction {
 	var trans di.Transaction

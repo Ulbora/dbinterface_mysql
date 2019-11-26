@@ -20,7 +20,8 @@ func TestMyDbTx_Connect(t *testing.T) {
 	mdbt.User = "admin"
 	mdbt.Password = "admin"
 	mdbt.Database = "testdb"
-	dbit = &mdbt
+	//dbit = &mdbt
+	dbit = mdbt.GetNewDatabase()
 	suc := dbit.Connect()
 	if !suc {
 		fmt.Println("Could not connect: ")
@@ -29,7 +30,7 @@ func TestMyDbTx_Connect(t *testing.T) {
 }
 
 func TestMyDbTx_Insert(t *testing.T) {
-	tx1 = mdbt.BeginTransaction()
+	tx1 = dbit.BeginTransaction()
 
 	var q = "insert into test (name, address) values(?, ?)"
 	var a []interface{}
@@ -46,7 +47,7 @@ func TestMyDbTx_Insert(t *testing.T) {
 }
 
 func TestMyDbTx_Insertfail(t *testing.T) {
-	tx1 = mdbt.BeginTransaction()
+	tx1 = dbit.BeginTransaction()
 
 	var q = "insert into test (name, address) values(?, ?)"
 	var a []interface{}
@@ -62,7 +63,7 @@ func TestMyDbTx_Insertfail(t *testing.T) {
 }
 
 func TestMyDbTx_Update(t *testing.T) {
-	tx1xx := mdbt.BeginTransaction()
+	tx1xx := dbit.BeginTransaction()
 	var q = "update test set name = ? , address = ? where id = ? "
 	var a []interface{}
 	a = append(a, "test insert 2", "123456 main st", idtx1)
@@ -74,7 +75,7 @@ func TestMyDbTx_Update(t *testing.T) {
 }
 
 func TestMyDbTx_Updatefail(t *testing.T) {
-	tx1xx := mdbt.BeginTransaction()
+	tx1xx := dbit.BeginTransaction()
 	var q = "update test11 set name = ? , address = ? where id = ? "
 	var a []interface{}
 	a = append(a, "test insert 2", "123456 main st", idtx1)
@@ -86,7 +87,7 @@ func TestMyDbTx_Updatefail(t *testing.T) {
 }
 
 func TestMyDbTx_Updatefail2(t *testing.T) {
-	tx1xx := mdbt.BeginTransaction()
+	tx1xx := dbit.BeginTransaction()
 	var q = "update test set name = ? , address = ? where id = ? "
 	var a []interface{}
 	//a = append(a, "test insert 2", "123456 main st", idtx1)
@@ -98,7 +99,7 @@ func TestMyDbTx_Updatefail2(t *testing.T) {
 }
 
 func TestMyDbTx_Delete(t *testing.T) {
-	tx1xx := mdbt.BeginTransaction()
+	tx1xx := dbit.BeginTransaction()
 	var q = "delete from test where id = ? "
 	var a []interface{}
 	a = append(a, idtx1)
@@ -110,7 +111,7 @@ func TestMyDbTx_Delete(t *testing.T) {
 }
 
 func TestMyDbTx_Deletefail(t *testing.T) {
-	tx1xx := mdbt.BeginTransaction()
+	tx1xx := dbit.BeginTransaction()
 	var q = "delete from test22 where id = ? "
 	var a []interface{}
 	a = append(a, idtx1)
@@ -122,7 +123,7 @@ func TestMyDbTx_Deletefail(t *testing.T) {
 }
 
 func TestMyDbTx_Deletefail2(t *testing.T) {
-	tx1xx := mdbt.BeginTransaction()
+	tx1xx := dbit.BeginTransaction()
 	var q = "delete from test where id = ? "
 	var a []interface{}
 	//a = append(a, idtx1)
@@ -134,7 +135,7 @@ func TestMyDbTx_Deletefail2(t *testing.T) {
 }
 
 func TestMyDbTx_Insert2(t *testing.T) {
-	tx1 = mdbt.BeginTransaction()
+	tx1 = dbit.BeginTransaction()
 
 	var q = "insert into test (name, address) values(?, ?)"
 	var a []interface{}
@@ -169,7 +170,7 @@ func TestMyDbTx_Insert3(t *testing.T) {
 	// tx1.Commit()
 }
 func TestMyDbTx_Close(t *testing.T) {
-	suc := mdbt.Close()
+	suc := dbit.Close()
 	if !suc {
 		t.Fail()
 	}

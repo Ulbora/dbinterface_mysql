@@ -21,7 +21,8 @@ func TestMyDbTxMock_Connect(t *testing.T) {
 	mdbtm.Password = "admin"
 	mdbtm.Database = "testdb"
 	mdbtm.MockConnectSuccess = true
-	dbitm = &mdbtm
+	//dbitm = &mdbtm
+	dbitm = mdbtm.GetNewDatabase()
 	suc := dbitm.Connect()
 	if !suc {
 		fmt.Println("Could not connect: ")
