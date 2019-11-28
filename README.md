@@ -1,4 +1,4 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/Ulbora/dbinterface)](https://goreportcard.com/report/github.com/Ulbora/dbinterface)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Ulbora/dbinterface_mysql)](https://goreportcard.com/report/github.com/Ulbora/dbinterface_mysql)
 
 Database Interface MySQL module
 ==============

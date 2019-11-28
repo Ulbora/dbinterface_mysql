@@ -7,6 +7,7 @@ import (
 
 	//"log"
 
+	//Required
 	_ "github.com/go-sql-driver/mysql"
 )
 

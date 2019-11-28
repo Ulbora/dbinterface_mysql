@@ -5,6 +5,7 @@ import (
 	di "github.com/Ulbora/dbinterface"
 	"log"
 
+	//Required
 	_ "github.com/go-sql-driver/mysql"
 )
 
